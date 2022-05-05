@@ -1,5 +1,5 @@
 /*global AlgoSigner*/
-import React,{useState, useRef} from "react";
+import React, { useState } from "react";
 import { FormStyle } from "../Form.style";
 import { TransactionButton } from "../Button.styles";
 import { BodyText } from "../MyAlgoWallet/MyAlgoWallet.styles";

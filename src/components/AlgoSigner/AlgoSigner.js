@@ -7,7 +7,7 @@ import { AlgoSignerMain } from "./AlgoSigner.styles";
 import CreateAsset from "./CreateAsset";
 import AssetOptin from "./AssetOptin"
 
-const AlgoSigner =  ()  =>{
+const AlgoSigner =  ()  => {
     const userAccount = useRef()
     const receipient = useRef()
     const amount = useRef()

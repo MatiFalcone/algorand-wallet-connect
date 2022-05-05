@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useRef } from 'react'
 import { loadStdlib } from '@reach-sh/stdlib'
 import MyAlgoConnect from '@reach-sh/stdlib/ALGO_MyAlgoConnect';
 import ConnectWalletButton from './ConnectButton/ConnectWalletBtn';
@@ -6,6 +6,7 @@ import TransferFund from './Transferfund';
 import FundAccount from './FundWallet';
 import myalgo from '../../assets/images/myaglo-logo.png'
 import { MyAlgoWalletMain } from './MyAlgoWallet.styles';
+import axios from 'axios';
 
 const reach = loadStdlib("ALGO")
 
@@ -25,7 +26,8 @@ const MyAlgoWallet = () => {
     const connectWallet = async () =>{
         try{
             await getAccount()
-            await getBalance()
+            await getBalanceFromAPI(account.current.networkAccount.addr)
+            //await getBalance()
                 
         }catch(err){
             console.log(err)
@@ -42,24 +44,35 @@ const MyAlgoWallet = () => {
         }
     }
 
+    const getBalanceFromAPI = async (account) => {
+        try{
+              let rawBalance = await axios.get(`https://algoindexer.testnet.algoexplorerapi.io/v2/accounts/${account}`);
+                balance.current = rawBalance.data.account.amount;
+                setAccountBal(balance.current)
+                console.log("Balance :" + balance.current)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     const getBalance = async () => {
         try{
               let rawBalance = await reach.balanceOf(account.current)
+              console.log(rawBalance);
                 balance.current = reach.formatCurrency(rawBalance, 4)
                 setAccountBal(balance.current)
             console.log("Balance :" + balance.current)
         }catch(err){
             console.log(err)
         }
-      
     }
 
     return(
         <MyAlgoWalletMain>
             <img src= {myalgo} alt="My Algo" height= "70px"/>
             <ConnectWalletButton accountAddress={accountAddress} connectWallet = {connectWallet} accountBal = {accountBal}/>
-            <TransferFund account = {account} getBalance = {getBalance} />
-            <FundAccount account = {account} getBalance = {getBalance}/>
+            <TransferFund account = {account} getBalance = {function(){ return getBalanceFromAPI(account.current.networkAccount.addr) }} />
+            {/* <FundAccount account = {account} getBalance = {function(){ return getBalanceFromAPI(account.current.networkAccount.addr) }}/> */}
         </MyAlgoWalletMain>
     )
 }

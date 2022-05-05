@@ -3,7 +3,7 @@ import React, {useRef, useState} from "react";
 import { FormStyle } from "../Form.style";
 import { TransactionButton } from "../Button.styles";
 import { BodyText } from "../MyAlgoWallet/MyAlgoWallet.styles";
-import { TOKEN, ALGOD_SERVER, PORT, RECEIVER } from "../../constants";
+import { TOKEN, ALGOD_SERVER, PORT } from "../../constants";
 const algosdk = require("algosdk");
 
 const CreateAsset = ({userAccount}) => {

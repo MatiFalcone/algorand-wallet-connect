@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import { loadStdlib } from '@reach-sh/stdlib'
 import { FormStyle } from "../Form.style";
-import { Button, TransactionButton } from "../Button.styles";
+import { TransactionButton } from "../Button.styles";
 import { BodyText } from "./MyAlgoWallet.styles";
 
 const reach = loadStdlib("ALGO")
